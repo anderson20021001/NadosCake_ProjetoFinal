@@ -14,7 +14,7 @@ class ProdutoController extends Controller
     {
         //dd('Produto');
         $produtos = Produto::get();
-        dd($produtos);
+        return view('produto.produto_index', ['produtos' => $produtos]);
     }
 
     /**
@@ -22,11 +22,8 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        $produto = new Produto();
-        $produto->nome = 'Sabão em pó';
-        $produto->quantidade = 70;
-        $produto->preco = 2.5;
-        $produto->save();
+        
+        return view ('produto.produto_create');
     }
 
     /**
@@ -34,9 +31,28 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $messages = [
+            'nome.required' => 'O :attribute é obrigatório!',
+            'quantidade.required' => 'O :attribute é obrigatório!',
+            'preco.required' => 'O :attribute é obrigatório!',
 
+             ];
+
+
+        $Validated = $request->validate([
+            'nome'          => 'required|min:5',
+            'quantidade'    => 'required',
+            'preco'         => 'required',
+        ], $messages);
+
+        $produto = new Produto();
+        $produto->nome          = $request->nome       ;
+        $produto->quantidade    = $request->quantidade     ;
+        $produto->preco         = $request->preco ;
+        $produto->save();
+
+        return redirect()->route('produto.index')->with('status', 'Produto criado com sucesso');
+    }
     /**
      * Display the specified resource.
      */
