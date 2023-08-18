@@ -90,11 +90,12 @@ class ProdutoController extends Controller
             'quantidade'    => 'required',
             'preco'         => 'required',
         ], $messages);
+
         $produto = Produto::find($id);
         $produto->nome                = $request->nome;
         $produto->quantidade          = $request->quantidade;
         $produto->preco               = $request->preco;
-        $produto->save()     
+        $produto->save();    
         
         return direct()->route('produto.index')->with('status', 'Produto alterado com sucesso');
     }
@@ -106,6 +107,7 @@ class ProdutoController extends Controller
     {
         $produto = Produto::find($id);
         $produto->delete();
+        return redirect()->route('produto.index')->with('status', 'Produto excluido com sucesso');
 
     }
 }

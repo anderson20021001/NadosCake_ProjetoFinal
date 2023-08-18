@@ -6,14 +6,22 @@
   Produtos
   <br>
 
-<a href="{{url('/produto/create')}}">Criar</a>
+
 
 @if (session('status'))
   <div class="alert alert-success">
       {{ session('status') }}
 </div>
 @endif
+    <script>
+    function confirmDelete() {
+    return confirm('Tem certeza que deseja excluir este registro?');
+    }
+  </script>
 
+
+
+<a href="{{url('/produto/create')}}">Criar</a>
 <table>
 <thead>
   <tr>
@@ -24,9 +32,8 @@
     <th>Ações</th>
   </tr>
 </thead>
-
-@foreach ($produtos as $produto)
 <tbody>
+@foreach ($produtos as $produto)
   <tr>
    <td>{{$produto->id}}</td>
     <td>{{$produto->nome}}</td>
@@ -35,14 +42,18 @@
     <td>
       <a href= "{{ url('/produto/' . $produto->id) }}">VISUALIZAR</a>
       <a href= "{{ url('/produto/' . $produto->id . '/edit') }}">EDITAR</a>
-
+      <form method="POST" action="{{ url('/produto/' . $produto->id) }}" onsubmit = "return ConfirmDelete()" >
+        @method('DELETE')
+        @csrf
+      <input type="submit" value="EXCLUIR">
+</form>
     </td>
   </tr>
+  @endforeach
 </tbody>
 </table>
 
-    Produto: {{ $produto->nome }}<br>
-@endforeach
+  
 
 </div>
 @endsection
