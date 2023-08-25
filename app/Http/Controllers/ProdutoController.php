@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produto;
+use App\Models\Categoria;
+
 
 class ProdutoController extends Controller
 {
@@ -13,7 +15,7 @@ class ProdutoController extends Controller
     public function index()
     {
         //dd('Produto');
-        $produtos = Produto::get();
+        $produtos = Produto::orderBy('nome')->get();
         return view('produto.produto_index', ['produtos' => $produtos]);
     }
 
@@ -22,8 +24,11 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        
-        return view ('produto.produto_create');
+        $categorias = Categoria::OrderBy('nome','ASC')->get(); //pluck('nome', 'id' );
+        //dd($categorias);
+        return view ('produto.produto_create' , ['categorias' => $categorias]);
+
+
     }
 
     /**

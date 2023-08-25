@@ -17,7 +17,15 @@
 
     <form method="POST" action="{{url('/produto/create')}}">
         @csrf
-        <form>
+
+        <label for="categoria">Escolha uma categoria:</label>
+
+        <select name="categoria_id" id="categoria">
+             @foreach($categorias as $categoria)
+                <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
+            @endforeach
+        </select>
+        
   <label for="fname">Nome:</label><br>
   <input type="text" id="fname" name="nome"><br>
 
