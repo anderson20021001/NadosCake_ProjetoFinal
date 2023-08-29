@@ -25,6 +25,7 @@
                 <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
             @endforeach
         </select>
+        <br>
         
   <label for="fname">Nome:</label><br>
   <input type="text" id="fname" name="nome"><br>

@@ -19,6 +19,19 @@
         @method('PUT')
         @csrf
         <form>
+        <label for="categoria">Escolha uma categoria:</label>
+
+    <select name="categoria_id" id="categoria">
+     @foreach($categorias as $categoria)
+        <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
+            @if($categoria->id == $produto->categoria_id)
+            <option value="{{ $categoria->id }}" selected>{{ $categoria->nome}}</option>
+            @else
+            <option value="{{ $categoria->id }}"> {{ $categoria->nome}}</option>
+            @endif
+        @endforeach
+    </select>
+
   <label for="fname">Nome:</label><br>
   <input type="text" id="fname" name="nome" value="{{$produto ->nome}}"><br>
 

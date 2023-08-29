@@ -45,12 +45,14 @@ class ProdutoController extends Controller
 
 
         $Validated = $request->validate([
+            'categoria_id'  => 'required',
             'nome'          => 'required|min:5',
-            'quantidade'    => 'required',
+            'quantidade'    => 'required|integer',
             'preco'         => 'required',
         ], $messages);
 
         $produto = new Produto();
+        $produto->categoria_id  = $request->categoria_id;
         $produto->nome          = $request->nome       ;
         $produto->quantidade    = $request->quantidade     ;
         $produto->preco         = $request->preco ;
@@ -74,7 +76,8 @@ class ProdutoController extends Controller
     public function edit(string $id)
     {
         $produto = Produto::find($id);
-       return view('produto.produto_edit' , ['produto' => $produto]);
+        $categorias = Categoria::OrderBy('nome','ASC')->get();
+       return view('produto.produto_edit' , ['produto' => $produto, 'categorias' => '$categorias']);
     }
 
     /**
@@ -86,6 +89,7 @@ class ProdutoController extends Controller
             'nome.required' => 'O :attribute é obrigatório!',
             'quantidade.required' => 'O :attribute é obrigatório!',
             'preco.required' => 'O :attribute é obrigatório!',
+            'categoria_id.required' => 'O :attribute é obrigatório!',
 
              ];
 
